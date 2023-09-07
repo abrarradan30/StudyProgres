@@ -1,2 +1,2 @@
 coba merge conflict
-coba merge
+coba
