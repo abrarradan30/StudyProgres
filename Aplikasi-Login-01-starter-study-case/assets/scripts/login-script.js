@@ -5,10 +5,12 @@
  * Gunakan fungsi showPopUp() untuk menampilkan pop up error
  */
 
+// Membuat variabel untuk elemen view
 const loginFormElement = document.querySelector('#loginForm');
 const inputEmailElement = document.querySelector('#inputEmail');
 const inputPasswordElement = document.querySelector('#inputPassword');
 
+// Membuat variabel untuk menyimpan informasi email dan password
 const expectedEmail = 'admin@dicoding.com';
 const expectedPassword = 'superpassword';
 
