@@ -2,12 +2,13 @@
 Repository ini berisi progres belajar di Dicoding
 --
 
-** September 2023**  
+** Tahun 2023 **  
 
-Belajar Dasar Structured Query Language (SQL). (Progres 100%)
-* Pengenalan Data dan Basis Data.
-* Database Management Systems (DBMS).
-* Pengenalan Structured Query Language.
-* Basic Query.
+1. Belajar Dasar Structured Query Language (SQL).
+2. Memulai Pemrograman dengan Haskell
+
+** Tahun 2024 ** 
+1. Belajar Dasar Pemrograman Web
+
 
   
