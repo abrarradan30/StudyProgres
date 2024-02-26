@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
       event.preventDefault();
       addTodo();
     });
+    if (isStorageExist()) {
+      loadDataFromStorage();
+    }
 });
 
 // fungsi tambahTodo
@@ -16,6 +19,7 @@ function addTodo() {
     todos.push(todoObject);
    
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function generateId() {
@@ -108,6 +112,7 @@ function addTaskToCompleted (todoId) {
    
     todoTarget.isCompleted = true;
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function findTodo(todoId) {
@@ -127,6 +132,7 @@ function removeTaskFromCompleted(todoId) {
    
     todos.splice(todoTarget, 1);
     document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
 
 function undoTaskFromCompleted(todoId) {
@@ -136,6 +142,7 @@ function undoTaskFromCompleted(todoId) {
  
   todoTarget.isCompleted = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
+  saveData();
 }
 
 // fungsi mencari id Todo untuk dihapus atau undo
@@ -147,4 +154,59 @@ function findTodoIndex(todoId) {
     }
    
     return -1;
+}
+
+// fungsi menyimpan data storage
+function saveData() {
+  if (isStorageExist()) {
+    const parsed = JSON.stringify(todos);
+    localStorage.setItem(STORAGE_KEY, parsed);
+    document.dispatchEvent(new Event(SAVED_EVENT));
+  }
+}
+
+const SAVED_EVENT = 'saved-todo';
+const STORAGE_KEY = 'TODO_APPS';
+ 
+function isStorageExist() /* boolean */ {
+  if (typeof (Storage) === undefined) {
+    alert('Browser kamu tidak mendukung local storage');
+    return false;
+  }
+  return true;
+}
+
+document.addEventListener(SAVED_EVENT, function () {
+  console.log(localStorage.getItem(STORAGE_KEY));
+});
+
+// document.addEventListener(SAVED_EVENT, function () {
+//   const savedData = localStorage.getItem(STORAGE_KEY);
+//   const floatingMessage = document.createElement('div');
+//   floatingMessage.textContent = 'Data telah disimpan: ' + savedData;
+//   floatingMessage.style.position = 'fixed';
+//   floatingMessage.style.top = '50%';
+//   floatingMessage.style.left = '50%';
+//   floatingMessage.style.transform = 'translate(-50%, -50%)';
+//   floatingMessage.style.background = '#ffffff';
+//   floatingMessage.style.padding = '20px';
+//   floatingMessage.style.border = '2px solid #000000';
+//   floatingMessage.style.borderRadius = '10px';
+//   floatingMessage.style.zIndex = '9999';
+//   document.body.appendChild(floatingMessage);
+// });
+
+
+// fungsi memuat data Todo
+function loadDataFromStorage() {
+  const serializedData = localStorage.getItem(STORAGE_KEY);
+  let data = JSON.parse(serializedData);
+ 
+  if (data !== null) {
+    for (const todo of data) {
+      todos.push(todo);
+    }
+  }
+ 
+  document.dispatchEvent(new Event(RENDER_EVENT));
 }
